@@ -1,13 +1,15 @@
 class ListExercise:
     @staticmethod
     def replace(input_list: list[int]) -> list[int]:
+        if len(input_list) == 0:
+            return input_list
         local_max = input_list[0]
-        for i in range(1, len(input_list)):
-            if input_list[i] > local_max:
-                local_max = input_list[i]
-        for i in range(len(input_list)):
-            if input_list[i] > 0:
-                input_list[i] = local_max
+        for elem in input_list:
+            if elem > local_max:
+                local_max = elem
+        for elem in input_list:
+            if elem > 0:
+                elem = local_max
         return input_list
         pass
 
