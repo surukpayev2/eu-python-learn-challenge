@@ -6,10 +6,10 @@ class MapExercise:
     @staticmethod
     def rating(list_of_movies: list[dict]) -> float:
 
-        def filter_rating_country(x):
+        def filter_rating_country(x: dict) -> bool:
             return x["rating_kinopoisk"] != "0" and x["rating_kinopoisk"] != "" and "," in x["country"]
 
-        def rating_extract(x):
+        def rating_extract(x: dict) -> float:
             return float(x["rating_kinopoisk"])
 
         filtered_list_of_movies = list(filter(filter_rating_country, list_of_movies))
@@ -21,10 +21,10 @@ class MapExercise:
 
     @staticmethod
     def chars_count(list_of_movies: list[dict], rating: Union[float, int]) -> int:
-        def filter_rating_country(x):
+        def filter_rating_country(x: dict) -> bool:
             return x["rating_kinopoisk"] != "" and float(x["rating_kinopoisk"]) >= rating
 
-        def count_i_extract(x):
+        def count_i_extract(x: dict) -> int:
             count_in_name = 0
             for element in x["name"]:
                 if element == "и":
