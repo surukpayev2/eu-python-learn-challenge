@@ -14,7 +14,6 @@ class MapExercise:
 
         filtered_list_of_movies = list(filter(filter_rating_country, list_of_movies))
         ratings = list(map(rating_extract, filtered_list_of_movies))
-        print((list_of_movies[4054]["country"]))
         sum_rating = reduce((lambda x, y: x + y), ratings)
         return sum_rating / len(ratings)
         pass
