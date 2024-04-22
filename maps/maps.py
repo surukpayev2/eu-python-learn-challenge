@@ -1,31 +1,40 @@
 from typing import Union
+from functools import reduce
 
 
 class MapExercise:
     @staticmethod
     def rating(list_of_movies: list[dict]) -> float:
-        """
-        !!Задание нужно решить используя map!!
-        Посчитать средний рейтинг фильмов (rating_kinopoisk) у которых две или больше стран.
-        Фильмы у которых рейтинг не задан или равен 0 не учитывать в расчете среднего.
 
-        :param list_of_movies: Список фильмов.
-        Ключи словаря: name, rating_kinopoisk, rating_imdb, genres, year, access_level, country
-        :return: Средний рейтинг фильмов у которых две или больше стран
-        """
+        def filter_rating_country(x: dict) -> bool:
+            return x["rating_kinopoisk"] != "0" and x["rating_kinopoisk"] != "" and "," in x["country"]
+
+        def rating_extract(x: dict) -> float:
+            return float(x["rating_kinopoisk"])
+
+        filtered_list_of_movies = list(filter(filter_rating_country, list_of_movies))
+        ratings = list(map(rating_extract, filtered_list_of_movies))
+        sum_rating = reduce((lambda x, y: x + y), ratings)
+        return sum_rating / len(ratings)
         pass
 
     @staticmethod
     def chars_count(list_of_movies: list[dict], rating: Union[float, int]) -> int:
-        """
-        !!Задание нужно решить используя map!!
-        Посчитать количество букв 'и' в названиях всех фильмов с рейтингом (rating_kinopoisk) больше
-        или равным заданному значению
+        def filter_rating_country(x: dict) -> bool:
+            return x["rating_kinopoisk"] != "" and float(x["rating_kinopoisk"]) >= rating
 
-        :param list_of_movies: Список фильмов
-        Ключи словаря: name, rating_kinopoisk, rating_imdb, genres, year, access_level, country
-        :param rating: Заданный рейтинг
-        :return: Количество букв 'и' в названиях всех фильмов с рейтингом больше
-        или равным заданному значению
-        """
+        def count_i_extract(x: dict) -> int:
+            count_in_name = 0
+            for element in x["name"]:
+                if element == "и":
+                    count_in_name += 1
+            return count_in_name
+
+        filtered_list_of_movies = list(filter(filter_rating_country, list_of_movies))
+        all_counts = list(map(count_i_extract, filtered_list_of_movies))
+        if len(all_counts) > 0:
+            answer = reduce((lambda x, y: x + y), all_counts)
+        else:
+            answer = 0
+        return answer
         pass
